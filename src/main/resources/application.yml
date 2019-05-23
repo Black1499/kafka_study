@@ -1,0 +1,36 @@
+spring:
+  kafka:
+    consumer:
+      group-id: foo
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092 #172.20.0.233:9092,172.20.0.234:9092,172.20.0.235:9092
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092 #172.20.0.233:9092,172.20.0.234:9092,172.20.0.235:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      transaction-id-prefix: tx.
+      properties:
+        spring.json.type.mapping: foo:com.lzx.kafka.entity.Foo,bar:com.lzx.kafka.entity.Bar
+
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/testdb
+    username: root
+    password: 123456
+mybatis:
+  typeAliasesPackage: com.lzx.entity
+  mapperLocations: classpath:mappers/*.xml
+server:
+  port: 7777
+
+
